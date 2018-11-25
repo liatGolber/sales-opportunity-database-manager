@@ -1,1 +1,9 @@
 C:\Users\Liat Golber\Documents\visual studio 2015\Projects\project 8\project 8\bin\Debug\project 8.exe.config
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe.config
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csprojResolveAssemblyReference.cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.Properties.Resources.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.pdb
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.exe
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.pdb
