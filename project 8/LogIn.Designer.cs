@@ -43,6 +43,7 @@
             this.okB.TabIndex = 0;
             this.okB.Text = "Log in";
             this.okB.UseVisualStyleBackColor = true;
+            this.okB.Click += new System.EventHandler(this.okB_Click);
             // 
             // label1
             // 
@@ -63,6 +64,7 @@
             this.textBox1.Size = new System.Drawing.Size(157, 28);
             this.textBox1.TabIndex = 2;
             this.textBox1.WordWrap = false;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox2
             // 
@@ -85,7 +87,7 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Password";
             // 
-            // Form2
+            // LogIn
             // 
             this.AcceptButton = this.okB;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
