@@ -33,9 +33,15 @@ namespace project_8
             s.Location = Cursor.Position;
             s.ShowDialog();
             if (s.value != null)
+            {
                 FillData(e.ColumnIndex, s.value);
+                button1.Visible = true;
+            }
             else
+            {
                 FillData();
+                button1.Visible = false;
+            }
             s.Dispose();
         }
 
@@ -111,6 +117,13 @@ namespace project_8
                         }
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FillData();
+            button1.Visible = false;
+
         }
     }
 }
