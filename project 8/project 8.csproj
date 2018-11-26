@@ -72,6 +72,12 @@
     <Compile Include="RegisterF.Designer.cs">
       <DependentUpon>RegisterF.cs</DependentUpon>
     </Compile>
+    <Compile Include="SearchPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchPopUp.Designer.cs">
+      <DependentUpon>SearchPopUp.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="addNewPackage.resx">
       <DependentUpon>addNewPackage.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +98,9 @@
     </Compile>
     <EmbeddedResource Include="RegisterF.resx">
       <DependentUpon>RegisterF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchPopUp.resx">
+      <DependentUpon>SearchPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

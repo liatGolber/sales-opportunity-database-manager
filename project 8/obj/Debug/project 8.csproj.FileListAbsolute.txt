@@ -21,3 +21,9 @@ C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.MainWin.resources
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.LogIn.resources
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.RegisterF.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.ResolveComReference.cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.addNewPackage.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.LogIn.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.MainWin.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.RegisterF.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.SearchPopUp.resources
