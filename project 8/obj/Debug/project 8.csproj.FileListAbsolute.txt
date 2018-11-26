@@ -7,3 +7,17 @@ C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 
 C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.pdb
 C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.exe
 C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.pdb
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe.config
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.pdb
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csprojAssemblyReference.cache
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.ResolveComReference.cache
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.addNewPackage.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.Properties.Resources.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.GenerateResource.cache
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.CoreCompileInputs.cache
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.exe
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.pdb
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.MainWin.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.LogIn.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.RegisterF.resources
