@@ -28,6 +28,5 @@ namespace project_8
                 this.Close();
             }
         }
-
     }
 }
