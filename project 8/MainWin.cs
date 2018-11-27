@@ -112,5 +112,14 @@ namespace project_8
                 }
             }
         }
+
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridViewRow sent = dataGridView1.Rows[e.RowIndex];
+            Opp o = Program.GetOpByID(sent.Cells[0].Value.ToString());
+            this.Hide();
+            new opportunity_page(o).ShowDialog();
+            this.Show();
+        }
     }
 }

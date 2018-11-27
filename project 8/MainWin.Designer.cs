@@ -31,6 +31,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.helloL = new System.Windows.Forms.Label();
+            this.regB = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,8 +41,6 @@
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.helloL = new System.Windows.Forms.Label();
-            this.regB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,10 +75,31 @@
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(455, 362);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
+            // 
+            // helloL
+            // 
+            this.helloL.AutoSize = true;
+            this.helloL.Location = new System.Drawing.Point(12, 9);
+            this.helloL.Name = "helloL";
+            this.helloL.Size = new System.Drawing.Size(39, 13);
+            this.helloL.TabIndex = 1;
+            this.helloL.Text = "Hello x";
+            // 
+            // regB
+            // 
+            this.regB.Location = new System.Drawing.Point(700, 12);
+            this.regB.Name = "regB";
+            this.regB.Size = new System.Drawing.Size(88, 39);
+            this.regB.TabIndex = 2;
+            this.regB.Text = "Register new user";
+            this.regB.UseVisualStyleBackColor = true;
+            this.regB.Click += new System.EventHandler(this.regB_Click);
             // 
             // Column1
             // 
+            this.Column1.Frozen = true;
             this.Column1.HeaderText = "ID";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -139,25 +160,6 @@
             this.Column8.Name = "Column8";
             this.Column8.ReadOnly = true;
             this.Column8.Width = 76;
-            // 
-            // helloL
-            // 
-            this.helloL.AutoSize = true;
-            this.helloL.Location = new System.Drawing.Point(12, 9);
-            this.helloL.Name = "helloL";
-            this.helloL.Size = new System.Drawing.Size(39, 13);
-            this.helloL.TabIndex = 1;
-            this.helloL.Text = "Hello x";
-            // 
-            // regB
-            // 
-            this.regB.Location = new System.Drawing.Point(700, 12);
-            this.regB.Name = "regB";
-            this.regB.Size = new System.Drawing.Size(88, 39);
-            this.regB.TabIndex = 2;
-            this.regB.Text = "Register new user";
-            this.regB.UseVisualStyleBackColor = true;
-            this.regB.Click += new System.EventHandler(this.regB_Click);
             // 
             // MainWin
             // 

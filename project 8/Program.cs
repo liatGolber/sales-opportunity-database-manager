@@ -85,6 +85,17 @@ namespace project_8
             return new User();
         }
 
+        public static Opp GetOpByID(string id)
+        {
+
+            foreach (Opp o in opportunites)
+            {
+                if (o.ID == id)
+                    return o;
+            }
+            return new Opp();
+        }
+
         public static User InsertNewUser(string id, string name, string lName, string password, bool isAdmin)
         {
             User ret = new User();
@@ -185,6 +196,7 @@ namespace project_8
         [STAThread]
         static void Main()
         {
+            new opportunity_update().ShowDialog();
             init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
