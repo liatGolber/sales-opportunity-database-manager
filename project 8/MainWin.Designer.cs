@@ -31,17 +31,18 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.helloL = new System.Windows.Forms.Label();
+            this.regB = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.helloL = new System.Windows.Forms.Label();
-            this.regB = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +58,7 @@
             this.Column1,
             this.Column2,
             this.Column3,
+            this.Column9,
             this.Column4,
             this.Column5,
             this.Column6,
@@ -78,6 +80,36 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDoubleClick);
             this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
+            // 
+            // helloL
+            // 
+            this.helloL.AutoSize = true;
+            this.helloL.Location = new System.Drawing.Point(12, 9);
+            this.helloL.Name = "helloL";
+            this.helloL.Size = new System.Drawing.Size(39, 13);
+            this.helloL.TabIndex = 1;
+            this.helloL.Text = "Hello x";
+            // 
+            // regB
+            // 
+            this.regB.Location = new System.Drawing.Point(700, 12);
+            this.regB.Name = "regB";
+            this.regB.Size = new System.Drawing.Size(88, 39);
+            this.regB.TabIndex = 2;
+            this.regB.Text = "Register new user";
+            this.regB.UseVisualStyleBackColor = true;
+            this.regB.Click += new System.EventHandler(this.regB_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(473, 76);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(64, 21);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Reset";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Column1
             // 
@@ -102,6 +134,13 @@
             this.Column3.ReadOnly = true;
             this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column3.Width = 83;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Email";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 57;
             // 
             // Column4
             // 
@@ -142,36 +181,6 @@
             this.Column8.ReadOnly = true;
             this.Column8.Width = 76;
             // 
-            // helloL
-            // 
-            this.helloL.AutoSize = true;
-            this.helloL.Location = new System.Drawing.Point(12, 9);
-            this.helloL.Name = "helloL";
-            this.helloL.Size = new System.Drawing.Size(39, 13);
-            this.helloL.TabIndex = 1;
-            this.helloL.Text = "Hello x";
-            // 
-            // regB
-            // 
-            this.regB.Location = new System.Drawing.Point(700, 12);
-            this.regB.Name = "regB";
-            this.regB.Size = new System.Drawing.Size(88, 39);
-            this.regB.TabIndex = 2;
-            this.regB.Text = "Register new user";
-            this.regB.UseVisualStyleBackColor = true;
-            this.regB.Click += new System.EventHandler(this.regB_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(473, 76);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 21);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Reset";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainWin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,15 +203,15 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label helloL;
         private System.Windows.Forms.Button regB;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.Button button1;
-
     }
 }

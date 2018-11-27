@@ -20,6 +20,7 @@ namespace project_8
             textBox1.Text = op.name;
             textBox2.Text = op.lastN;
             textBox3.Text = op.ID;
+            textBox4.Text = op.Phone;
             textBox7.Text = op.status;
             textBox9.Text = op.treatedAt.ToShortDateString();
             richTextBox1.Text = op.comment;

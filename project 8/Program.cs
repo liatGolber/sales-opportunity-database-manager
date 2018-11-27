@@ -99,10 +99,12 @@ namespace project_8
         public static User InsertNewUser(string id, string name, string lName, string password, bool isAdmin)
         {
             User ret = new User();
+            //must have for excel handeling
             Excel.Application MyApp = new Excel.Application();
             Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
             Excel.Range xlRange = MySheet.UsedRange;
+            //
             int r = xlRange.Rows.Count + 1;
             MySheet.Cells[r, 1] = id;
             MySheet.Cells[r, 2] = name;
@@ -110,13 +112,15 @@ namespace project_8
             MySheet.Cells[r, 4] = password;
             MySheet.Cells[r, 5] = isAdmin;
             MyBook.Save();
+
+            //must have for excel handeling
             Marshal.ReleaseComObject(xlRange);
             Marshal.ReleaseComObject(MySheet);
-
             MyBook.Close();
             Marshal.ReleaseComObject(MyBook);
             MyApp.Quit();
             Marshal.ReleaseComObject(MyApp);
+            //
             userList.Add(ret);
             return ret;
         }
