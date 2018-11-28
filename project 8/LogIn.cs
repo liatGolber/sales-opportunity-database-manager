@@ -19,9 +19,7 @@ namespace project_8
 
         private void okB_Click(object sender, EventArgs e)
         {
-            Cursor.Current = Cursors.WaitCursor;
             User get = Program.GetUserByID(textBox1.Text);
-            Cursor.Current = Cursors.Default;
             if (get.ID != null && get.password == textBox2.Text)
             {
                 Program.currentUser = get;
@@ -32,8 +30,7 @@ namespace project_8
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-          
+        {    
             if (Convert.ToInt32(e.KeyChar) - Convert.ToInt32('0') > 9)
                     e.Handled = true;
         }

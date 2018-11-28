@@ -20,10 +20,18 @@ namespace project_8
             textBox1.Text = op.name;
             textBox2.Text = op.lastN;
             textBox3.Text = op.ID;
-            textBox7.Text = op.status;
+            textBox4.Text = op.phone;
+            textBox5.Text = op.email;
+            textBox7.Text = op.status.Substring(0, op.status.IndexOf('('));
+            textBox8.Text = op.status.Substring(op.status.IndexOf('(') + 1, op.status.IndexOf(')') - 1 - op.status.IndexOf('('));
             textBox9.Text = op.treatedAt.ToShortDateString();
             richTextBox1.Text = op.comment;
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new opportunity_update(opp).ShowDialog();
         }
     }
 }
