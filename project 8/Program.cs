@@ -222,7 +222,8 @@ namespace project_8
             Excel.Range xlRange = MySheet.UsedRange;
             for (int i = 1; i <= xlRange.Rows.Count; i++)
             {
-                try {
+                try
+                {
                     Opp ret = new Opp();
                     ret.ID = xlRange.Cells[i, 1].Value.ToString();
                     ret.name = xlRange.Cells[i, 2].Value.ToString();
@@ -263,13 +264,17 @@ namespace project_8
             Excel.Range xlRange = MySheet.UsedRange;
             for (int i = 1; i <= xlRange.Rows.Count; i++)
             {
-                Package ret = new Package();
-                ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                ret.lineNum = xlRange.Cells[i, 2].Value.ToString();
-                ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
-                ret.startD = xlRange.Cells[i, 4].Value;
-                ret.endD = xlRange.Cells[i, 5].Value;
-                onPackages.Add(ret);
+                try
+                {
+                    Package ret = new Package();
+                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
+                    ret.lineNum = xlRange.Cells[i, 2].Value.ToString();
+                    ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
+                    ret.startD = xlRange.Cells[i, 4].Value;
+                    ret.endD = xlRange.Cells[i, 5].Value;
+                    onPackages.Add(ret);
+                }
+                catch { break; }
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -313,7 +318,7 @@ namespace project_8
                     s += rnd.Next(j == 0 ? 5 : 10);
                 MySheet.Cells[i, 1] = s;
                 MySheet.Cells[i, 2] = names[rnd.Next(0, names.Length)];
-                MySheet.Cells[i, 3] = lastName[rnd.Next(0, lastName.Length)]; 
+                MySheet.Cells[i, 3] = lastName[rnd.Next(0, lastName.Length)];
                 s = "05";
                 for (int j = 0; j < 8; j++)
                     s += rnd.Next(10);
@@ -325,6 +330,45 @@ namespace project_8
                 DateTime d = DateTime.Now.AddDays(sub);
                 MySheet.Cells[i, 8] = d.Date;
                 MySheet.Cells[i, 9] = "don’t know what he wants in his life";
+            }
+            MyBook.Save();
+            //must have for excel handeling
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+            MyApp.Quit();
+            Marshal.ReleaseComObject(MyApp);
+            //
+        }
+
+        private static void GenerateRndPack(int k)
+        {
+            //must have for excel handeling
+            Excel.Application MyApp = new Excel.Application();
+            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
+            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+            Excel.Range xlRange = MySheet.UsedRange;
+            int r = xlRange.Rows.Count;
+            if (r != 0)
+                r++;
+            Random rnd = new Random();
+            //
+            for (int i = r; i < k + r; i++)
+            {
+                int rn = rnd.Next(0, opportunites.Count);
+                MySheet.Cells[i, 1] = opportunites[rn].ID;
+                string s = "05";
+                for (int j = 0; j < 8; j++)
+                    s += rnd.Next(10);
+                MySheet.Cells[i, 2] = s;
+                MySheet.Cells[i, 3] = rnd.Next(1, 4).ToString();
+                DateTime d = opportunites[rn].treatedAt.Date.AddDays(-7 + rnd.Next(8));
+                MySheet.Cells[i, 4] = d.Date;
+                MySheet.Cells[i, 5] = d.AddMonths(rnd.Next(6, 13));
             }
             MyBook.Save();
             //must have for excel handeling
