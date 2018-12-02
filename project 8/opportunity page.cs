@@ -49,10 +49,14 @@ namespace project_8
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            button2.Visible = button1.Visible = true;
-            if (opp.ID == textBox3.Text && opp.name == textBox1.Text && opp.lastN == textBox2.Text
+            button1.Visible = true;
+            if (opp.ID != null)
+                button2.Visible = true;
+            if (opp.ID != null && opp.ID == textBox3.Text && opp.name == textBox1.Text && opp.lastN == textBox2.Text
                 && opp.phone == textBox4.Text && textBox5.Text == opp.email && richTextBox1.Text == opp.comment)
+            {
                 button2.Visible = button1.Visible = false;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

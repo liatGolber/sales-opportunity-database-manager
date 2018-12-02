@@ -162,6 +162,7 @@
             this.MaximizeBox = false;
             this.Name = "RegisterF";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Register";
             this.ResumeLayout(false);
             this.PerformLayout();
