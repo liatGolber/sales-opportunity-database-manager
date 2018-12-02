@@ -113,7 +113,6 @@ namespace project_8
 
         public static void InsertNewUser(string id, string name, string lName, string password, bool isAdmin)
         {
-            User ret = new User();
             //must have for excel handeling
             Excel.Application MyApp = new Excel.Application();
             Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
@@ -140,27 +139,45 @@ namespace project_8
             MyApp.Quit();
             Marshal.ReleaseComObject(MyApp);
             //
-            userList.Add(ret);
         }
 
-        public static void InsertNewOpp(string id, string name, string lName, string password, bool isAdmin)
+        public static void InsertUpdateOpp(string id, string name, string lName, string phone, string email, DateTime treatedAt, string status, string treatedBy, string comment)
         {
-            Opp ret = new Opp();
             //must have for excel handeling
             Excel.Application MyApp = new Excel.Application();
             Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
             Excel.Range xlRange = MySheet.UsedRange;
             //
-
-            int r = xlRange.Rows.Count + 1;
-            MySheet.Cells[r, 1] = id;
-            MySheet.Cells[r, 2] = name;
-            MySheet.Cells[r, 3] = lName;
-            MySheet.Cells[r, 4] = password;
-            MySheet.Cells[r, 5] = isAdmin;
+            bool flag = true;
+            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            {
+                if (MySheet.Cells[i, 1].Value.ToString() == id)
+                {
+                    MySheet.Cells[i, 2] = name;
+                    MySheet.Cells[i, 3] = lName;
+                    MySheet.Cells[i, 4] = phone;
+                    MySheet.Cells[i, 5] = email;
+                    MySheet.Cells[i, 8] = treatedAt.Date;
+                    MySheet.Cells[i, 9] = comment;
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                int i = MySheet.UsedRange.Rows.Count + 1;
+                MySheet.Cells[i, 1] = id;
+                MySheet.Cells[i, 2] = name;
+                MySheet.Cells[i, 3] = lName;
+                MySheet.Cells[i, 4] = phone;
+                MySheet.Cells[i, 5] = email;
+                MySheet.Cells[i, 6] = status;
+                MySheet.Cells[i, 7] = treatedBy;
+                MySheet.Cells[i, 8] = treatedAt.Date;
+                MySheet.Cells[i, 9] = comment;
+            }
             MyBook.Save();
-
             //must have for excel handeling
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -172,7 +189,6 @@ namespace project_8
             MyApp.Quit();
             Marshal.ReleaseComObject(MyApp);
             //
-            opportunites.Add(ret);
         }
 
         public static void UpdateUserList()

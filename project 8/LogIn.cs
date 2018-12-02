@@ -34,5 +34,6 @@ namespace project_8
             if (Convert.ToInt32(e.KeyChar) - Convert.ToInt32('0') > 9)
                     e.Handled = true;
         }
+
     }
 }

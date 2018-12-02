@@ -149,6 +149,8 @@ namespace project_8
             Opp o = Program.GetOpByID(sent.Cells[0].Value.ToString());
             this.Hide();
             new opportunity_page(o).ShowDialog();
+            FillData();
+            FillReminders();
             this.Show();
         }
 
@@ -156,6 +158,15 @@ namespace project_8
         {
             FillData();
             button1.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new opportunity_page().ShowDialog();
+            FillData();
+            FillReminders();
+            this.Show();
         }
     }
 }
