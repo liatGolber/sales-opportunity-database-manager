@@ -111,6 +111,40 @@ namespace project_8
             return new Opp();
         }
 
+        public static void UpdateUserList()
+        {
+            if (userList != null)
+                userList.Clear();
+            else
+                userList = new List<User>();
+
+            Excel.Application MyApp = new Excel.Application();
+            Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
+            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
+            Excel.Range xlRange = MySheet.UsedRange;
+            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            {
+                User ret = new User();
+                ret.ID = xlRange.Cells[i, 1].Value.ToString();
+                ret.name = xlRange.Cells[i, 2].Value.ToString();
+                ret.lastN = xlRange.Cells[i, 3].Value.ToString();
+                ret.password = xlRange.Cells[i, 4].Value.ToString();
+                ret.isAdmin = Convert.ToBoolean(xlRange.Cells[i, 5].Value.ToString());
+                userList.Add(ret);
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+
+            MyApp.Quit();
+            Marshal.ReleaseComObject(MyApp);
+        }
+
         public static void InsertNewUser(string id, string name, string lName, string password, bool isAdmin)
         {
             //must have for excel handeling
@@ -191,27 +225,103 @@ namespace project_8
             //
         }
 
-        public static void UpdateUserList()
+        public static void MovetHistory(string id)
         {
-            if (userList != null)
-                userList.Clear();
-            else
-                userList = new List<User>();
-
+            Opp o = GetOpByID(id);
+            if (o.ID == null)
+                return;
             Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
+            Excel.Workbook MyBook = MyApp.Workbooks.Open(historyDB);
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
             Excel.Range xlRange = MySheet.UsedRange;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            // we choose for pin a random number
+            Random rnd = new Random();
+            string pin = "";
+            for (int j = 0; j < 10; j++)
             {
-                User ret = new User();
-                ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                ret.name = xlRange.Cells[i, 2].Value.ToString();
-                ret.lastN = xlRange.Cells[i, 3].Value.ToString();
-                ret.password = xlRange.Cells[i, 4].Value.ToString();
-                ret.isAdmin = Convert.ToBoolean(xlRange.Cells[i, 5].Value.ToString());
-                userList.Add(ret);
+                //if get 1 or 0, w will add for the pin number- a number
+                if (rnd.Next(2) == 0)
+                    pin += rnd.Next(10).ToString();
+                else
+                    // else we will add cher
+                    pin += Convert.ToChar(rnd.Next(Convert.ToInt32('A'), Convert.ToInt32('Z') + 1)).ToString();
             }
+            int i = xlRange.Rows.Count + 1;
+            MySheet.Cells[i, 1] = id;
+            MySheet.Cells[i, 2] = o.name;
+            MySheet.Cells[i, 3] = o.lastN;
+            MySheet.Cells[i, 4] = o.phone;
+            MySheet.Cells[i, 5] = o.email;
+            MySheet.Cells[i, 6] = o.status;
+            MySheet.Cells[i, 7] = o.treatedBy.ID;
+            MySheet.Cells[i, 8] = o.treatedAt.Date;
+            MySheet.Cells[i, 9] = o.comment;
+            MySheet.Cells[i, 10] = pin;
+
+
+            ////
+            MySheet = null;
+            xlRange = null;
+            MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+            xlRange = MySheet.UsedRange;
+            i = xlRange.Rows.Count + 1;
+            foreach (Package p in onPackages)
+            {
+                if (p.ID == id)
+                {
+                    MySheet.Cells[i, 1] = id;
+                    MySheet.Cells[i, 2] = p.lineNum;
+                    MySheet.Cells[i, 3] = p.packageType;
+                    MySheet.Cells[i, 4] = p.startD.Date;
+                    MySheet.Cells[i, 5] = p.endD.Date;
+                    MySheet.Cells[i++, 6] = pin;
+                }
+            }
+            MyBook.Save();
+
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+
+            //
+            MyBook = null;
+            MySheet = null;
+            xlRange = null;
+            MyBook = MyApp.Workbooks.Open(opportunitesDB);
+            MySheet = (Excel.Worksheet)MyBook.Sheets[1];
+            xlRange = MySheet.UsedRange;
+            for (int j = 1; j <= xlRange.Rows.Count; j++)
+            {
+                if (MySheet.Cells[j, 1].Value.ToString() == id)
+                {
+                    Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
+                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
+                    Marshal.ReleaseComObject(range);
+                    j--;
+                    break;
+                }
+            }
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+            MySheet = null;
+            xlRange = null;
+            MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+            xlRange = MySheet.UsedRange;
+            for (int j = 1; j <= xlRange.Rows.Count; j++)
+            {
+                if (MySheet.Cells[j, 1].Value.ToString() == id)
+                {
+                    Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
+                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
+                    Marshal.ReleaseComObject(range);
+                    j--;
+                    break;
+                }
+            }
+
+            MyBook.Save();
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
