@@ -172,6 +172,7 @@
             this.textBox3.TabIndex = 0;
             this.textBox3.WordWrap = false;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox4
             // 
@@ -183,6 +184,7 @@
             this.textBox4.TabIndex = 0;
             this.textBox4.WordWrap = false;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox5
             // 

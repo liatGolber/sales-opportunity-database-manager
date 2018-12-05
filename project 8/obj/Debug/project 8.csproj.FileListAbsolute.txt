@@ -76,3 +76,19 @@ C:\Users\omerav1\Desktop\sales-opportunity-database-manager-Omer_latest\project 
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.csproj.CoreCompileInputs.cache
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.exe
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.pdb
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.csprojResolveAssemblyReference.cache
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.csproj.ResolveComReference.cache
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.addNewPackage.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.LogIn.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.MainWin.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.opportunity_page.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.opportunity_update.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.Properties.Resources.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.RegisterF.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project_8.SearchPopUp.resources
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\bin\Debug\project 8.exe.config
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\bin\Debug\project 8.exe
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\bin\Debug\project 8.pdb
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.exe
+C:\Users\Liat Golber\Desktop\sales-opportunity-database-manager-Omer_latest\project 8\obj\Debug\project 8.pdb
