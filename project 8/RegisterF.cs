@@ -32,15 +32,14 @@ namespace project_8
                 MessageBox.Show(err, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                Cursor.Current = Cursors.WaitCursor;
                 if (Program.GetUserByID(textBox1.Text).ID == null)
                 {
                     Program.InsertNewUser(textBox1.Text, textBox2.Text, textBox3.Text, textBox5.Text, checkBox1.Checked);
+                    Program.UpdateUserList();
                     this.Close();
                 }
                 else
                     MessageBox.Show(textBox1.Text + " is already registered please use a differnt ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Cursor.Current = Cursors.Default;
 
             }
         }
@@ -50,5 +49,8 @@ namespace project_8
             if (Convert.ToInt32(e.KeyChar) - Convert.ToInt32('0') > 9)
                 e.Handled = true;
         }
+
+
+       
     }
 }

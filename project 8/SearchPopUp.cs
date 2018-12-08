@@ -28,5 +28,10 @@ namespace project_8
                 this.Close();
             }
         }
+
+        private void SearchPopUp_Load(object sender, EventArgs e)
+        {
+            textBox1.Focus();
+        }
     }
 }

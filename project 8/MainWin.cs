@@ -15,10 +15,10 @@ namespace project_8
         public MainWin()
         {
             InitializeComponent();
-
             helloL.Text = "Hello " + Program.currentUser.name;
-            regB.Enabled = Program.currentUser.isAdmin;
+            regB.Visible = Program.currentUser.isAdmin;
             FillData();
+            FillReminders();
         }
 
         private void regB_Click(object sender, EventArgs e)
@@ -54,11 +54,12 @@ namespace project_8
                 add.Cells[0].Value = o.ID;
                 add.Cells[1].Value = o.name;
                 add.Cells[2].Value = o.lastN;
-                add.Cells[3].Value = o.Phone;
+                add.Cells[3].Value = o.phone;
                 add.Cells[4].Value = o.status;
-                add.Cells[5].Value = o.treatedBy.ID;
-                add.Cells[6].Value = o.treatedAt.ToShortDateString();
-                add.Cells[7].Value = o.comment;
+                add.Cells[5].Value = o.email;
+                add.Cells[6].Value = o.treatedBy.ID;
+                add.Cells[7].Value = o.treatedAt.ToShortDateString();
+                add.Cells[8].Value = o.comment;
 
                 switch (colI)
                 {
@@ -87,7 +88,7 @@ namespace project_8
                         }
                     case 3:
                         {
-                            if (o.Phone.ToUpper().Contains(filter.ToUpper()))
+                            if (o.phone.ToUpper().Contains(filter.ToUpper()))
                                 dataGridView1.Rows.Add(add);
                             break;
                         }
@@ -99,17 +100,23 @@ namespace project_8
                         }
                     case 5:
                         {
-                            if (o.treatedBy.ID.ToUpper().Contains(filter.ToUpper()))
+                            if (o.email.ToUpper().Contains(filter.ToUpper()))
                                 dataGridView1.Rows.Add(add);
                             break;
                         }
                     case 6:
                         {
-                            if (add.Cells[6].Value.ToString().ToUpper().Contains(filter.ToUpper()))
+                            if (o.treatedBy.ID.ToUpper().Contains(filter.ToUpper()))
                                 dataGridView1.Rows.Add(add);
                             break;
                         }
                     case 7:
+                        {
+                            if (add.Cells[6].Value.ToString().ToUpper().Contains(filter.ToUpper()))
+                                dataGridView1.Rows.Add(add);
+                            break;
+                        }
+                    case 8:
                         {
                             if (o.comment.ToUpper().Contains(filter.ToUpper()))
                                 dataGridView1.Rows.Add(add);
@@ -119,14 +126,31 @@ namespace project_8
             }
         }
 
+        private void FillReminders()
+        {
+            dataGridView2.Rows.Clear();
+            foreach (Opp o in Program.opportunites)
+            {
+                DataGridViewRow add = dataGridView2.Rows[0].Clone() as DataGridViewRow;
+                add.Cells[0].Value = o.ID;
+                add.Cells[1].Value = o.name;
+                add.Cells[2].Value = o.phone;
+                int p = Program.GetStatusPrec(o.status);
+                if (DateTime.Now.Date >= o.treatedAt.Date.AddDays(7).Date || p >= 80)
+                    dataGridView2.Rows.Add(add);
+            }
+        }
+
         private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
-            DataGridViewRow sent = dataGridView1.Rows[e.RowIndex];
+            DataGridViewRow sent = (sender as DataGridView).Rows[e.RowIndex];
             Opp o = Program.GetOpByID(sent.Cells[0].Value.ToString());
             this.Hide();
             new opportunity_page(o).ShowDialog();
+            FillData();
+            FillReminders();
             this.Show();
         }
 
@@ -134,6 +158,15 @@ namespace project_8
         {
             FillData();
             button1.Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new opportunity_page().ShowDialog();
+            FillData();
+            FillReminders();
+            this.Show();
         }
     }
 }
