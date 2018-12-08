@@ -189,6 +189,7 @@ namespace project_8
                     MySheet.Cells[i, 3] = lName;
                     MySheet.Cells[i, 4] = phone;
                     MySheet.Cells[i, 5] = email;
+                    MySheet.Cells[i, 7] = treatedBy;
                     MySheet.Cells[i, 8] = treatedAt.Date;
                     MySheet.Cells[i, 9] = comment;
                     flag = false;
@@ -303,7 +304,6 @@ namespace project_8
                         Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
                         range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                         Marshal.ReleaseComObject(range);
-                        j--;
                         break;
                     }
                 }
@@ -321,7 +321,6 @@ namespace project_8
                         range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                         Marshal.ReleaseComObject(range);
                         j--;
-                        break;
                     }
                 }
 
@@ -358,6 +357,7 @@ namespace project_8
             Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
             Excel.Range xlRange = MySheet.UsedRange;
+            //load from oppDB
             for (int i = 1; i <= xlRange.Rows.Count; i++)
             {
                 try
@@ -372,6 +372,36 @@ namespace project_8
                     ret.treatedBy = GetUserByID(xlRange.Cells[i, 7].Value.ToString());
                     ret.treatedAt = xlRange.Cells[i, 8].Value;
                     ret.comment = xlRange.Cells[i, 9].Value.ToString();
+                    ret.hID = xlRange.Cells[i, 10].Value;
+                    opportunites.Add(ret);
+                }
+                catch { break; }
+            }
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+
+            MyBook = MyApp.Workbooks.Open(historyDB);
+            MySheet = (Excel.Worksheet)MyBook.Sheets[1];
+            xlRange = MySheet.UsedRange;
+            //load from historyDB
+            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            {
+                try
+                {
+                    Opp ret = new Opp();
+                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
+                    ret.name = xlRange.Cells[i, 2].Value.ToString();
+                    ret.lastN = xlRange.Cells[i, 3].Value.ToString();
+                    ret.phone = xlRange.Cells[i, 4].Value.ToString();
+                    ret.email = xlRange.Cells[i, 5].Value.ToString();
+                    ret.status = xlRange.Cells[i, 6].Value.ToString();
+                    ret.treatedBy = GetUserByID(xlRange.Cells[i, 7].Value.ToString());
+                    ret.treatedAt = xlRange.Cells[i, 8].Value;
+                    ret.comment = xlRange.Cells[i, 9].Value.ToString();
+                    ret.hID = xlRange.Cells[i, 10].Value;
                     opportunites.Add(ret);
                 }
                 catch { break; }
@@ -410,6 +440,31 @@ namespace project_8
                     ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
                     ret.startD = xlRange.Cells[i, 4].Value;
                     ret.endD = xlRange.Cells[i, 5].Value;
+                    ret.hID = xlRange.Cells[i, 6].Value;
+                    packages.Add(ret);
+                }
+                catch { break; }
+            }
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+
+            MyBook = MyApp.Workbooks.Open(historyDB);
+            MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+            xlRange = MySheet.UsedRange;
+            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            {
+                try
+                {
+                    Package ret = new Package();
+                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
+                    ret.lineNum = xlRange.Cells[i, 2].Value.ToString();
+                    ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
+                    ret.startD = xlRange.Cells[i, 4].Value;
+                    ret.endD = xlRange.Cells[i, 5].Value;
+                    ret.hID = xlRange.Cells[i, 6].Value;
                     packages.Add(ret);
                 }
                 catch { break; }
@@ -439,9 +494,8 @@ namespace project_8
             //must have for excel handeling
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
             Excel.Range xlRange = MySheet.UsedRange;
-            int r = xlRange.Rows.Count;
-            if (r != 0)
-                r++;
+            int r = 1;
+            while (!string.IsNullOrEmpty(MySheet.Cells[r, 1].Value)) r++;
             Random rnd = new Random();
             //
             try
@@ -669,11 +723,7 @@ namespace project_8
         [STAThread]
         static void Main()
         {
-            //GenerateRndOpp(100);
             init();
-            //foreach (Opp p in opportunites)
-            //    if (p.status.ToUpper().Contains("CLOSED"))
-            //        MovetHistory(p.ID);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             new Worker().ShowDialog();

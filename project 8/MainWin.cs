@@ -50,6 +50,8 @@ namespace project_8
             dataGridView1.Rows.Clear();
             foreach (Opp o in Program.opportunites)
             {
+                if (o.hID != null)
+                    continue;
                 DataGridViewRow add = dataGridView1.Rows[0].Clone() as DataGridViewRow;
                 add.Cells[0].Value = o.ID;
                 add.Cells[1].Value = o.name;
@@ -131,6 +133,8 @@ namespace project_8
             dataGridView2.Rows.Clear();
             foreach (Opp o in Program.opportunites)
             {
+                if (o.hID != null)
+                    continue;
                 DataGridViewRow add = dataGridView2.Rows[0].Clone() as DataGridViewRow;
                 add.Cells[0].Value = o.ID;
                 add.Cells[1].Value = o.name;

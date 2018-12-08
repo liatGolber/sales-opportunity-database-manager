@@ -206,7 +206,7 @@
             this.textBox7.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(131, 26);
+            this.textBox7.Size = new System.Drawing.Size(206, 26);
             this.textBox7.TabIndex = 0;
             this.textBox7.WordWrap = false;
             // 
@@ -218,7 +218,7 @@
             this.textBox8.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(131, 26);
+            this.textBox8.Size = new System.Drawing.Size(58, 26);
             this.textBox8.TabIndex = 0;
             this.textBox8.WordWrap = false;
             // 

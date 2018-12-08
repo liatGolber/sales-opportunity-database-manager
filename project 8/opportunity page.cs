@@ -20,6 +20,7 @@ namespace project_8
             updatedTextBoxes();
 
         }
+
         public opportunity_page()
         {
             InitializeComponent();
@@ -42,6 +43,7 @@ namespace project_8
             richTextBox1.Text = opp.comment;
             button2.Visible = button1.Visible = false;
         }
+
         private void button3_Click(object sender, EventArgs e)
         {
             new opportunity_update(opp).ShowDialog();
@@ -83,12 +85,15 @@ namespace project_8
             {
                 if (Program.GetOpByID(textBox1.Text).ID == null)
                     Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
+                else
+                    return;
                 Program.UpdateOppList();
                 opp = Program.GetOpByID(textBox3.Text);
                 updatedTextBoxes();
                 textBox3.ReadOnly = true;
             }
         }
+
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Convert.ToInt32(e.KeyChar) - Convert.ToInt32('0') > 9)
