@@ -270,7 +270,6 @@
             this.label1.Size = new System.Drawing.Size(53, 20);
             this.label1.TabIndex = 7;
             this.label1.Text = "E-Mail";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -291,7 +290,6 @@
             this.label3.Size = new System.Drawing.Size(84, 20);
             this.label3.TabIndex = 7;
             this.label3.Text = "Last name";
-            this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
             // label4
             // 
@@ -302,7 +300,6 @@
             this.label4.Size = new System.Drawing.Size(55, 20);
             this.label4.TabIndex = 7;
             this.label4.Text = "Phone";
-            this.label4.Click += new System.EventHandler(this.label1_Click);
             // 
             // label5
             // 
@@ -313,7 +310,6 @@
             this.label5.Size = new System.Drawing.Size(56, 20);
             this.label5.TabIndex = 7;
             this.label5.Text = "Status";
-            this.label5.Click += new System.EventHandler(this.label1_Click);
             // 
             // label6
             // 
@@ -324,7 +320,6 @@
             this.label6.Size = new System.Drawing.Size(98, 20);
             this.label6.TabIndex = 7;
             this.label6.Text = "Update date";
-            this.label6.Click += new System.EventHandler(this.label1_Click);
             // 
             // richTextBox2
             // 

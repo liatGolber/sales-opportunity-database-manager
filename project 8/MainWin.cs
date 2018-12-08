@@ -135,7 +135,7 @@ namespace project_8
                 add.Cells[0].Value = o.ID;
                 add.Cells[1].Value = o.name;
                 add.Cells[2].Value = o.phone;
-                int p = Convert.ToInt32(o.status.Substring(o.status.IndexOf('(') + 1, o.status.IndexOf('%') - 1 - o.status.IndexOf('(')));
+                int p = Program.GetStatusPrec(o.status);
                 if (DateTime.Now.Date >= o.treatedAt.Date.AddDays(7).Date || p >= 80)
                     dataGridView2.Rows.Add(add);
             }

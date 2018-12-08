@@ -37,7 +37,7 @@ namespace project_8
             textBox4.Text = opp.phone;
             textBox5.Text = opp.email;
             textBox7.Text = opp.status.Substring(0, opp.status.IndexOf('('));
-            textBox8.Text = opp.status.Substring(opp.status.IndexOf('(') + 1, opp.status.IndexOf(')') - 1 - opp.status.IndexOf('('));
+            textBox8.Text = Program.GetStatusPrec(opp.status).ToString();
             textBox9.Text = opp.treatedAt.ToShortDateString();
             richTextBox1.Text = opp.comment;
             button2.Visible = button1.Visible = false;
@@ -66,17 +66,37 @@ namespace project_8
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "")
+            string err = "";
+            if (textBox1.Text == "")
+                err += "Please enter a name\n";
+            if (textBox2.Text == "")
+                err += "Please enter a last name\n";
+            if (textBox3.Text.Length != 9)
+                err += "ID must be 9 digits long\n";
+            if (textBox4.Text.Length != 10)
+                err += "Phone must be 10 digits long\n";
+            if (textBox5.Text == "")
+                err += "Please enter a email\n";
+            if (err != "")
+                MessageBox.Show(err, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
             {
-                Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
+                if (Program.GetOpByID(textBox1.Text).ID == null)
+                    Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
                 Program.UpdateOppList();
                 opp = Program.GetOpByID(textBox3.Text);
                 updatedTextBoxes();
                 textBox3.ReadOnly = true;
             }
-            else
-                MessageBox.Show("Please fill all the required fields.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
         }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Convert.ToInt32(e.KeyChar) - Convert.ToInt32('0') > 9)
+                e.Handled = true;
+        }
+
+
     }
 }
+
+
