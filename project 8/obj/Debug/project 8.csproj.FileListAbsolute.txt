@@ -109,3 +109,4 @@ C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-o
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-opportunity-page-patch-1\project 8\obj\Debug\project 8.pdb
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-opportunity-page-patch-1\project 8\obj\Debug\project 8.csprojResolveAssemblyReference.cache
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-opportunity-page-patch-1\project 8\obj\Debug\project_8.Worker.resources
+C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-opportunity-page-patch-1\project 8\obj\Debug\project_8.workers.resources

@@ -43,7 +43,6 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.helloL = new System.Windows.Forms.Label();
-            this.regB = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -168,16 +167,6 @@
             this.helloL.TabIndex = 1;
             this.helloL.Text = "Hello x";
             // 
-            // regB
-            // 
-            this.regB.Location = new System.Drawing.Point(700, 12);
-            this.regB.Name = "regB";
-            this.regB.Size = new System.Drawing.Size(88, 39);
-            this.regB.TabIndex = 2;
-            this.regB.Text = "Register new user";
-            this.regB.UseVisualStyleBackColor = true;
-            this.regB.Click += new System.EventHandler(this.regB_Click);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(473, 76);
@@ -241,7 +230,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(573, 12);
+            this.button2.Location = new System.Drawing.Point(682, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 39);
             this.button2.TabIndex = 5;
@@ -257,7 +246,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.regB);
             this.Controls.Add(this.helloL);
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -277,7 +265,6 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label helloL;
-        private System.Windows.Forms.Button regB;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
