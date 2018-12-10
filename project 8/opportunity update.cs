@@ -12,7 +12,7 @@ namespace project_8
 {
     public partial class opportunity_update : Form
     {
-        private Opp op;
+        public Opp op;
         public opportunity_update(Opp o)
         {
             op = o;
@@ -52,10 +52,15 @@ namespace project_8
                 if (p.lineNum == select.Cells[0].Value.ToString())
                 {
                     Program.RemovePackage(p);
-                    Program.UpdatePacList();
+                    Program.InsertUpdateOpp(op.ID, op.name, op.lastN, op.phone, op.email, DateTime.Now, op.status, op.treatedBy.ID, op.comment);
+                    Program.opportunites.Remove(op);
+                    op.treatedAt = DateTime.Now;
+                    Program.opportunites.Add(op);
+                    Program.packages.Remove(p);
                     FillData();
                     break;
                 }
+           
             this.Enabled = true;
         }
 
@@ -64,7 +69,7 @@ namespace project_8
             DataGridViewRow sent = dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
             int n = 0;
             foreach (Package p in Program.GetPackagesByID(op.ID))
-                if (p.lineNum == sent.Cells[0].Value.ToString())
+                if (sent.Cells[0].Value != null && p.lineNum == sent.Cells[0].Value.ToString())
                 {
                     n = p.packageType;
                     break;
