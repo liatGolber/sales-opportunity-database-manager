@@ -108,7 +108,12 @@ namespace project_8
                 e.Handled = true;
         }
 
-
+       private void button4_click(object sender, KeyPressEventArgs e)
+        {
+            this.Hide();
+            new opportunity_update(opp).ShowDialog();
+            this.Show();
+        }
     }
 }
 
