@@ -12,7 +12,7 @@ namespace project_8
 {
     public partial class opportunity_page : Form
     {
-        private Opp opp;
+        public Opp opp;
         public opportunity_page(Opp op)
         {
             InitializeComponent();
@@ -47,7 +47,10 @@ namespace project_8
 
         private void button3_Click(object sender, EventArgs e)
         {
-            new opportunity_update(opp).ShowDialog();
+            opportunity_update ou = new opportunity_update(opp);
+            DialogResult d = ou.ShowDialog();
+            opp = ou.op; 
+            updatedTextBoxes();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

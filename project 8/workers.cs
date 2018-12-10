@@ -29,7 +29,7 @@ namespace project_8
             label1.Text = u.name + " won:" + uStats[1] / 100 * overStats[1];
             label2.Text = "Overall won:" + overStats[1];
             label3.Text = u.name + " lost:" + uStats[2] / 100 * overStats[2];
-            label4.Text= "Overall won:" + overStats[2];
+            label4.Text= "Overall lost:" + overStats[2];
 
             chart1.Series["ser"].Points.Clear();
             chart1.Series["ser"].Points.AddXY(u.name, uStats[1] / 100);
