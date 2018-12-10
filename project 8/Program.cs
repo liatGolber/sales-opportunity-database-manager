@@ -57,6 +57,64 @@ namespace project_8
 
         //functions
 
+
+        public static Dictionary<string, object> MakeExcelEss(string dbPath, int sheetNum = 1)
+        {
+            Dictionary<string, object> ret = new Dictionary<string, object>();
+            ret["App"] = new Excel.Application();
+            ret["Book"] = null;
+            // the reference to the worksheet,
+            // we'll assume the first sheet in the book.
+            ret["Sheet"] = null;
+            ret["Range"] = null;
+            // the range object is used to hold the data
+            // we'll be reading from and to find the range of data.
+            (ret["App"] as Excel.Application).Visible = false;
+            (ret["App"] as Excel.Application).ScreenUpdating = false;
+            (ret["App"] as Excel.Application).DisplayAlerts = false;
+            ret["Book"] = (ret["App"] as Excel.Application).Workbooks.Open(dbPath,
+       Type.Missing, Type.Missing, Type.Missing,
+       Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+       Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+       Type.Missing, Type.Missing, Type.Missing);
+            ret["Sheet"] = (Excel.Worksheet)(ret["Book"] as Excel.Workbook).Worksheets[sheetNum];
+            //ret["Range"] = (ret["Sheet"] as Excel.Worksheet).get_Range("A1", Type.Missing);
+            //ret["Range"] = (ret["Range"] as Excel.Range).get_End(Excel.XlDirection.xlToRight);
+            //ret["Range"] = (ret["Range"] as Excel.Range).get_End(Excel.XlDirection.xlDown);
+            //string downAddress = (ret["Range"] as Excel.Range).get_Address(
+            //    false, false, Excel.XlReferenceStyle.xlA1,
+            //    Type.Missing, Type.Missing);
+            //ret["Range"] = (ret["Sheet"] as Excel.Worksheet).get_Range("A1", downAddress);
+            ret["Range"] = (ret["Sheet"] as Excel.Worksheet).UsedRange;
+            return ret;
+        }
+
+        public static void CleanExcelEss(ref Dictionary<string, object> ret)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Marshal.ReleaseComObject(ret["Range"]);
+            Marshal.ReleaseComObject(ret["Sheet"]);
+
+            ret["Range"] = null;
+            ret["Sheet"] = null;
+            if (ret["Book"] != null)
+            {
+                (ret["Book"] as Excel.Workbook).Close(false, Type.Missing, Type.Missing);
+                Marshal.ReleaseComObject(ret["Book"]);
+            }
+            ret["Book"] = null;
+            if (ret["App"] != null)
+            {
+                (ret["App"] as Excel.Application).Quit();
+                Marshal.ReleaseComObject(ret["App"]);
+            }
+
+            ret["App"] = null;
+            ret = null;
+        }
+
         public static User GetUserByID(string id)
         {
             #region oldcode
@@ -119,150 +177,77 @@ namespace project_8
             return ret;
         }
 
-        public static void UpdateUserList()
-        {
-            if (userList != null)
-                userList.Clear();
-            else
-                userList = new List<User>();
-
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
-            {
-                User ret = new User();
-                ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                ret.name = xlRange.Cells[i, 2].Value.ToString();
-                ret.lastN = xlRange.Cells[i, 3].Value.ToString();
-                ret.password = xlRange.Cells[i, 4].Value.ToString();
-                ret.isAdmin = Convert.ToBoolean(xlRange.Cells[i, 5].Value.ToString());
-                userList.Add(ret);
-            }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
-        }
-
         public static void RemovePackage(Package p)
         {
-
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
-            Excel.Range xlRange = MySheet.UsedRange;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            Dictionary<string, object> ess = MakeExcelEss(opportunitesDB, 2);
+            object[,] values = (ess["Range"] as Excel.Range).Value2;
+            for (int i = 1; i <= values.GetLength(0); i++)
             {
-                if (MySheet.Cells[i, 1].Value.ToString() == p.ID && MySheet.Cells[i, 2].Value.ToString() == p.lineNum)
+                if (values[i, 1].ToString() == p.ID && values[i, 2].ToString() == p.lineNum)
                 {
-                    Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", i, i), Type.Missing).EntireRow;
+                    Excel.Range range = (ess["Sheet"] as Excel.Worksheet).get_Range(string.Format("A{0}:A{1}", i, i), Type.Missing).EntireRow;
                     range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
                     Marshal.ReleaseComObject(range);
-                    MyBook.Save();
+                    (ess["Book"] as Excel.Workbook).Save();
                     break;
                 }
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
+            CleanExcelEss(ref ess);
         }
 
         public static void InsertNewUser(string id, string name, string lName, string password, bool isAdmin)
         {
-            //must have for excel handeling
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(userDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
-            //
-
-            int r = xlRange.Rows.Count + 1;
-            MySheet.Cells[r, 1] = id;
-            MySheet.Cells[r, 2] = name;
-            MySheet.Cells[r, 3] = lName;
-            MySheet.Cells[r, 4] = password;
-            MySheet.Cells[r, 5] = isAdmin;
-            MyBook.Save();
-
-            //must have for excel handeling
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
-            //
+            Dictionary<string, object> ess = MakeExcelEss(userDB);
+            object[,] values = (ess["Range"] as Excel.Range).Value2;
+            int r = values.GetLength(0) + 1;
+            (ess["Sheet"] as Excel.Worksheet).Cells[r, 1] = id;
+            (ess["Sheet"] as Excel.Worksheet).Cells[r, 2] = name;
+            (ess["Sheet"] as Excel.Worksheet).Cells[r, 3] = lName;
+            (ess["Sheet"] as Excel.Worksheet).Cells[r, 4] = password;
+            (ess["Sheet"] as Excel.Worksheet).Cells[r, 5] = isAdmin;
+            (ess["Book"] as Excel.Workbook).Save();
+            CleanExcelEss(ref ess);
         }
 
         public static void InsertUpdateOpp(string id, string name, string lName, string phone, string email, DateTime treatedAt, string status, string treatedBy, string comment)
         {
             //must have for excel handeling
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
+            Dictionary<string, object> ess = MakeExcelEss(opportunitesDB);
+            object[,] values = (ess["Range"] as Excel.Range).Value2;
+
             //
             bool flag = true;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            for (int i = 1; i <= values.GetLength(1); i++)
             {
-                if (MySheet.Cells[i, 1].Value.ToString() == id)
+                if (values[i, 1].ToString() == id)
                 {
-                    MySheet.Cells[i, 2] = name;
-                    MySheet.Cells[i, 3] = lName;
-                    MySheet.Cells[i, 4] = phone;
-                    MySheet.Cells[i, 5] = email;
-                    MySheet.Cells[i, 7] = treatedBy;
-                    MySheet.Cells[i, 8] = treatedAt.Date;
-                    MySheet.Cells[i, 9] = comment;
+                    values[i, 2] = name;
+                    values[i, 3] = lName;
+                    values[i, 4] = phone;
+                    values[i, 5] = email;
+                    values[i, 7] = treatedBy;
+                    values[i, 8] = treatedAt.Date;
+                    values[i, 9] = comment;
                     flag = false;
+                    (ess["Range"] as Excel.Range).Value2 = values;
                     break;
                 }
             }
             if (flag)
             {
-                int i = MySheet.UsedRange.Rows.Count + 1;
-                MySheet.Cells[i, 1] = id;
-                MySheet.Cells[i, 2] = name;
-                MySheet.Cells[i, 3] = lName;
-                MySheet.Cells[i, 4] = phone;
-                MySheet.Cells[i, 5] = email;
-                MySheet.Cells[i, 6] = status;
-                MySheet.Cells[i, 7] = treatedBy;
-                MySheet.Cells[i, 8] = treatedAt.Date;
-                MySheet.Cells[i, 9] = comment;
+                int i = values.GetLength(0) + 1;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 1] = id;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 2] = name;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 3] = lName;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 4] = phone;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 5] = email;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 6] = status;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 7] = treatedBy;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 8] = treatedAt.Date;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 9] = comment;
             }
-            MyBook.Save();
-            //must have for excel handeling
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
-            //
+            (ess["Book"] as Excel.Workbook).Save();
+            CleanExcelEss(ref ess);
         }
 
         public static void MovetHistory(string id)
@@ -270,11 +255,8 @@ namespace project_8
             Opp o = GetOpByID(id);
             if (o.ID == null)
                 return;
-
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(historyDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
+            Dictionary<string, object> ess = MakeExcelEss(historyDB);
+            object[,] values = (ess["Range"] as Excel.Range).Value2;
             // we choose for pin a random number
             try
             {
@@ -289,102 +271,108 @@ namespace project_8
                         // else we will add cher
                         pin += Convert.ToChar(rnd.Next(Convert.ToInt32('A'), Convert.ToInt32('Z') + 1)).ToString();
                 }
-                int i = 1;
-                while (!string.IsNullOrEmpty(MySheet.Cells[i, 1].Value)) i++;
+                int i = values.GetLength(0);
+                if (values[i, 1] != null) i++;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 1] = id;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 2] = o.name;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 3] = o.lastN;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 4] = o.phone;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 5] = o.email;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 6] = o.status;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 7] = o.treatedBy.ID;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 8] = o.treatedAt.Date;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 9] = o.comment;
+                (ess["Sheet"] as Excel.Worksheet).Cells[i, 10] = pin;
+                (ess["Book"] as Excel.Workbook).Save();
+                CleanExcelEss(ref ess);
+                values = null;
 
-                MySheet.Cells[i, 1] = id;
-                MySheet.Cells[i, 2] = o.name;
-                MySheet.Cells[i, 3] = o.lastN;
-                MySheet.Cells[i, 4] = o.phone;
-                MySheet.Cells[i, 5] = o.email;
-                MySheet.Cells[i, 6] = o.status;
-                MySheet.Cells[i, 7] = o.treatedBy.ID;
-                MySheet.Cells[i, 8] = o.treatedAt.Date;
-                MySheet.Cells[i, 9] = o.comment;
-                MySheet.Cells[i, 10] = pin;
-
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(MySheet);
+                ess = MakeExcelEss(historyDB, 2);
+                values = (ess["Range"] as Excel.Range).Value2;
                 ////
-                MySheet = null;
-                xlRange = null;
-                MySheet = (Excel.Worksheet)MyBook.Sheets[2];
-                xlRange = MySheet.UsedRange;
-                i = 1;
-                while (!string.IsNullOrEmpty(MySheet.Cells[i, 1].Value)) i++;
+
+                 i = values.GetLength(0);
+                if (values[i, 1] != null) i++;
                 foreach (Package p in packages)
                 {
                     if (p.ID == id)
                     {
-                        MySheet.Cells[i, 1] = id;
-                        MySheet.Cells[i, 2] = p.lineNum;
-                        MySheet.Cells[i, 3] = p.packageType;
-                        MySheet.Cells[i, 4] = p.startD.Date;
-                        MySheet.Cells[i, 5] = p.endD.Date;
-                        MySheet.Cells[i++, 6] = pin;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i, 1] = id;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i, 2] = p.lineNum;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i, 3] = p.packageType;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i, 4] = p.startD.Date;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i, 5] = p.endD.Date;
+                        (ess["Sheet"] as Excel.Worksheet).Cells[i++, 6] = pin;
                     }
                 }
-                MyBook.Save();
+               (ess["Book"] as Excel.Workbook).Save();
+                CleanExcelEss(ref ess);
+                values = null;
 
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(MySheet);
-
-                MyBook.Close();
-                Marshal.ReleaseComObject(MyBook);
-
-                //
-                MyBook = null;
-                MySheet = null;
-                xlRange = null;
-                MyBook = MyApp.Workbooks.Open(opportunitesDB);
-                MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-                xlRange = MySheet.UsedRange;
-                for (int j = 1; j <= xlRange.Rows.Count; j++)
+                ess = MakeExcelEss(opportunitesDB);
+                values = (ess["Range"] as Excel.Range).Value2;
+                for (int j = 1; j <= values.GetLength(0); j++)
                 {
-                    if (MySheet.Cells[j, 1].Value.ToString() == id)
+                    if (values[j, 1].ToString() == id)
                     {
-                        Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
+                        Excel.Range range = (ess["Sheet"] as Excel.Worksheet).get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
                         range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
-                        Marshal.ReleaseComObject(range);
                         break;
                     }
                 }
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(MySheet);
-                MySheet = null;
-                xlRange = null;
-                MySheet = (Excel.Worksheet)MyBook.Sheets[2];
-                xlRange = MySheet.UsedRange;
-                for (int j = 1; j <= xlRange.Rows.Count; j++)
+                (ess["Book"] as Excel.Workbook).Save();
+                CleanExcelEss(ref ess);
+                values = null;
+
+                ess = MakeExcelEss(opportunitesDB, 2);
+                values = (ess["Range"] as Excel.Range).Value2;
+                for (int j = 1; j <= values.GetLength(0); j++)
                 {
-                    if (MySheet.Cells[j, 1].Value.ToString() == id)
+                    if (values[j, 1].ToString() == id)
                     {
-                        Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
+                        Excel.Range range = (ess["Sheet"] as Excel.Worksheet).get_Range(string.Format("A{0}:A{1}", j, j), Type.Missing).EntireRow;
                         range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
+                        values = (ess["Range"] as Excel.Range).Value2;
                         Marshal.ReleaseComObject(range);
                         j--;
                     }
                 }
 
-                MyBook.Save();
+             (ess["Book"] as Excel.Workbook).Save();
+                CleanExcelEss(ref ess);
+                values = null;
             }
             catch
             {
                 MessageBox.Show("Couldnt transfer " + id + " to history");
             }
+        }
+
+        public static void UpdateUserList()
+        {
+            if (userList != null)
+                userList.Clear();
+            else
+                userList = new List<User>();
+            Dictionary<string, object> ess = MakeExcelEss(userDB);
+            try
+            {
+                object[,] values = (object[,])(ess["Range"] as Excel.Range).Value2;
+                for (int i = 1; i <= values.GetLength(0); i++)
+                {
+                    User ret = new User();
+                    ret.ID = values[i, 1].ToString();
+                    ret.name = values[i, 2].ToString();
+                    ret.lastN = values[i, 3].ToString();
+                    ret.password = values[i, 4].ToString();
+                    ret.isAdmin = Convert.ToBoolean(values[i, 5].ToString());
+                    userList.Add(ret);
+                }
+            }
+            catch { }
             finally
             {
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(MySheet);
-
-                MyBook.Close();
-                Marshal.ReleaseComObject(MyBook);
-
-                MyApp.Quit();
-                Marshal.ReleaseComObject(MyApp);
+                CleanExcelEss(ref ess);
             }
         }
 
@@ -394,71 +382,51 @@ namespace project_8
                 opportunites.Clear();
             else
                 opportunites = new List<Opp>();
-
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
-            //load from oppDB
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            Dictionary<string, object> ess = MakeExcelEss(opportunitesDB);
+            try
             {
-                try
+                object[,] values = (object[,])(ess["Range"] as Excel.Range).Value2;
+                for (int i = 1; i <= values.GetLength(0); i++)
                 {
                     Opp ret = new Opp();
-                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                    ret.name = xlRange.Cells[i, 2].Value.ToString();
-                    ret.lastN = xlRange.Cells[i, 3].Value.ToString();
-                    ret.phone = xlRange.Cells[i, 4].Value.ToString();
-                    ret.email = xlRange.Cells[i, 5].Value.ToString();
-                    ret.status = xlRange.Cells[i, 6].Value.ToString();
-                    ret.treatedBy = GetUserByID(xlRange.Cells[i, 7].Value.ToString());
-                    ret.treatedAt = xlRange.Cells[i, 8].Value;
-                    ret.comment = xlRange.Cells[i, 9].Value.ToString();
-                    ret.hID = xlRange.Cells[i, 10].Value;
+                    ret.ID = values[i, 1].ToString();
+                    ret.name = values[i, 2].ToString();
+                    ret.lastN = values[i, 3].ToString();
+                    ret.phone = values[i, 4].ToString();
+                    ret.email = values[i, 5].ToString();
+                    ret.status = values[i, 6].ToString();
+                    ret.treatedBy = GetUserByID(values[i, 7].ToString());
+                    ret.treatedAt = DateTime.FromOADate((double)values[i, 8]);
+                    ret.comment = values[i, 9].ToString();
                     opportunites.Add(ret);
                 }
-                catch { break; }
-            }
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
+                CleanExcelEss(ref ess);
 
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyBook = MyApp.Workbooks.Open(historyDB);
-            MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            xlRange = MySheet.UsedRange;
-            //load from historyDB
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
-            {
-                try
+                ess = MakeExcelEss(historyDB);
+                values = null;
+                values = (object[,])(ess["Range"] as Excel.Range).Value2;
+                for (int i = 1; i <= values.GetLength(0); i++)
                 {
                     Opp ret = new Opp();
-                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                    ret.name = xlRange.Cells[i, 2].Value.ToString();
-                    ret.lastN = xlRange.Cells[i, 3].Value.ToString();
-                    ret.phone = xlRange.Cells[i, 4].Value.ToString();
-                    ret.email = xlRange.Cells[i, 5].Value.ToString();
-                    ret.status = xlRange.Cells[i, 6].Value.ToString();
-                    ret.treatedBy = GetUserByID(xlRange.Cells[i, 7].Value.ToString());
-                    ret.treatedAt = xlRange.Cells[i, 8].Value;
-                    ret.comment = xlRange.Cells[i, 9].Value.ToString();
-                    ret.hID = xlRange.Cells[i, 10].Value;
+                    ret.ID = values[i, 1].ToString();
+                    ret.name = values[i, 2].ToString();
+                    ret.lastN = values[i, 3].ToString();
+                    ret.phone = values[i, 4].ToString();
+                    ret.email = values[i, 5].ToString();
+                    ret.status = values[i, 6].ToString();
+                    ret.treatedBy = GetUserByID(values[i, 7].ToString());
+                    ret.treatedAt = DateTime.FromOADate((double)values[i, 8]);
+                    ret.comment = values[i, 9].ToString();
+                    ret.hID = values[i, 10].ToString();
                     opportunites.Add(ret);
                 }
-                catch { break; }
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            catch { }
+            finally
+            {
+                CleanExcelEss(ref ess);
+            }
 
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
         }
 
         public static void UpdatePacList()
@@ -468,60 +436,43 @@ namespace project_8
             else
                 packages = new List<Package>();
 
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
-            Excel.Range xlRange = MySheet.UsedRange;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            Dictionary<string, object> ess = MakeExcelEss(opportunitesDB, 2);
+            try
             {
-                try
+                object[,] values = (object[,])(ess["Range"] as Excel.Range).Value2;
+                for (int i = 1; i <= values.GetLength(0); i++)
                 {
+
                     Package ret = new Package();
-                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                    ret.lineNum = xlRange.Cells[i, 2].Value.ToString();
-                    ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
-                    ret.startD = xlRange.Cells[i, 4].Value;
-                    ret.endD = xlRange.Cells[i, 5].Value;
-                    ret.hID = xlRange.Cells[i, 6].Value;
+                    ret.ID = values[i, 1].ToString();
+                    ret.lineNum = values[i, 2].ToString();
+                    ret.packageType = Convert.ToInt32(values[i, 3].ToString());
+                    ret.startD = DateTime.FromOADate((double)values[i, 4]);
+                    ret.endD = DateTime.FromOADate((double)values[i, 5]);
                     packages.Add(ret);
                 }
-                catch { break; }
-            }
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyBook = MyApp.Workbooks.Open(historyDB);
-            MySheet = (Excel.Worksheet)MyBook.Sheets[2];
-            xlRange = MySheet.UsedRange;
-            for (int i = 1; i <= xlRange.Rows.Count; i++)
-            {
-                try
+                CleanExcelEss(ref ess);
+                values = null;
+                ess = MakeExcelEss(historyDB, 2);
+                values = (object[,])(ess["Range"] as Excel.Range).Value2;
+                for (int i = 1; i <= values.GetLength(0); i++)
                 {
                     Package ret = new Package();
-                    ret.ID = xlRange.Cells[i, 1].Value.ToString();
-                    ret.lineNum = xlRange.Cells[i, 2].Value.ToString();
-                    ret.packageType = Convert.ToInt32(xlRange.Cells[i, 3].Value.ToString());
-                    ret.startD = xlRange.Cells[i, 4].Value;
-                    ret.endD = xlRange.Cells[i, 5].Value;
-                    ret.hID = xlRange.Cells[i, 6].Value;
+                    ret.ID = values[i, 1].ToString();
+                    ret.lineNum = values[i, 2].ToString();
+                    ret.packageType = Convert.ToInt32(values[i, 3].ToString());
+                    ret.startD = DateTime.FromOADate((double)values[i, 4]);
+                    ret.endD = DateTime.FromOADate((double)values[i, 5]);
+                    ret.hID = values[i, 6].ToString();
                     packages.Add(ret);
                 }
-                catch { break; }
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            catch { }
+            finally
+            {
+                CleanExcelEss(ref ess);
+            }
 
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(MySheet);
-
-            MyBook.Close();
-            Marshal.ReleaseComObject(MyBook);
-
-            MyApp.Quit();
-            Marshal.ReleaseComObject(MyApp);
         }
 
         private static void init()
@@ -536,13 +487,14 @@ namespace project_8
             //must have for excel handeling
             Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
             Excel.Range xlRange = MySheet.UsedRange;
-            int r = 1;
-            while (!string.IsNullOrEmpty(MySheet.Cells[r, 1].Value)) r++;
+            object[,] values = (object[,])xlRange.Value2;
+            int r = values.GetLength(0);
+            if (values[r, 1] != null) r++;
             Random rnd = new Random();
             //
             try
             {
-                for (int i = r; i <= count + r; i++)
+                for (int i = r; i < count + r; i++)
                 {
                     MySheet.Cells[i, 1] = id;
                     string s = "05";
@@ -580,12 +532,10 @@ namespace project_8
             //string[] status = { "Closed won(100%)", "Closed lost(0%)" };
             #endregion
             //must have for excel handeling
-            Excel.Application MyApp = new Excel.Application();
-            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
-            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[1];
-            Excel.Range xlRange = MySheet.UsedRange;
-            int r = 1;
-            while (!string.IsNullOrEmpty(MySheet.Cells[r, 1].Value)) r++;
+            Dictionary<string, object> ess = MakeExcelEss(opportunitesDB);
+            object[,] values = (object[,])(ess["Range"] as Excel.Range).Value2;
+            int r = values.GetLength(0);
+            if (values[r, 1] != null) r++;
             Random rnd = new Random();
             //
             try
@@ -595,24 +545,24 @@ namespace project_8
                     string s = "";
                     for (int j = 0; j < 9; j++)
                         s += rnd.Next(j == 0 ? 5 : 10);
-                    MySheet.Cells[i, 1] = s;
-                    MySheet.Cells[i, 2] = names[rnd.Next(0, names.Length)];
-                    MySheet.Cells[i, 3] = lastName[rnd.Next(0, lastName.Length)];
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 1] = s;
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 2] = names[rnd.Next(0, names.Length)];
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 3] = lastName[rnd.Next(0, lastName.Length)];
                     s = "05";
                     for (int j = 0; j < 8; j++)
                         s += rnd.Next(10);
-                    MySheet.Cells[i, 4] = s;
-                    MySheet.Cells[i, 5] = MySheet.Cells[i, 2].Value.ToString() + "_" + MySheet.Cells[i, 3].Value.ToString() + "@" + Convert.ToChar(rnd.Next(Convert.ToInt32('A'), Convert.ToInt32('Z') + 1)) + "mail.com";
-                    MySheet.Cells[i, 6] = status[rnd.Next(0, status.Length)];
-                    MySheet.Cells[i, 7] = userList[rnd.Next(userList.Count)].ID;
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 4] = s;
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 5] = (ess["Sheet"] as Excel.Worksheet).Cells[i, 2].Value.ToString() + "_" + (ess["Sheet"] as Excel.Worksheet).Cells[i, 3].Value.ToString() + "@" + Convert.ToChar(rnd.Next(Convert.ToInt32('A'), Convert.ToInt32('Z') + 1)) + "mail.com";
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 6] = status[rnd.Next(0, status.Length)];
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 7] = userList[rnd.Next(userList.Count)].ID;
                     int sub = rnd.Next(31) * -1;
                     DateTime d = DateTime.Now.AddDays(sub);
-                    MySheet.Cells[i, 8] = d.Date;
-                    MySheet.Cells[i, 9] = "don’t know what he wants in his life";
-                    GenerateRndPack2(MySheet.Cells[i, 1].Value, rnd.Next(1, 4), d, MyBook);
-                    break;
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 8] = d.Date;
+                    (ess["Sheet"] as Excel.Worksheet).Cells[i, 9] = "don’t know what he wants in his life";
+                    GenerateRndPack2((ess["Sheet"] as Excel.Worksheet).Cells[i, 1].Value, rnd.Next(1, 4), d, (ess["Book"] as Excel.Workbook));
                 }
-                MyBook.Save();
+               (ess["Book"] as Excel.Workbook).Save();
+                CleanExcelEss(ref ess);
             }
             catch
             {
@@ -622,15 +572,7 @@ namespace project_8
             finally
             {
                 //must have for excel handeling
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
 
-                Marshal.ReleaseComObject(xlRange);
-                Marshal.ReleaseComObject(MySheet);
-                MyBook.Close();
-                Marshal.ReleaseComObject(MyBook);
-                MyApp.Quit();
-                Marshal.ReleaseComObject(MyApp);
             }
             //
         }
@@ -766,12 +708,11 @@ namespace project_8
             ret[4] /= ret[3];
             return ret;
         }
-
         [STAThread]
         static void Main()
         {
             init();
-            //GenerateRndOpp(1000);
+            //GenerateRndOpp(400);
             //init();
             //foreach (Opp o in opportunites)
             //    if (o.status.ToUpper().Contains("CLOSED"))
