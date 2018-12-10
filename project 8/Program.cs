@@ -108,6 +108,17 @@ namespace project_8
             return new Opp();
         }
 
+        public static List<Package> GetPackagesByID(string id)
+        {
+            List<Package> ret = new List<Package>();
+            foreach (Package p in packages)
+            {
+                if (p.ID == id)
+                    ret.Add(p);
+            }
+            return ret;
+        }
+
         public static void UpdateUserList()
         {
             if (userList != null)
@@ -128,6 +139,37 @@ namespace project_8
                 ret.password = xlRange.Cells[i, 4].Value.ToString();
                 ret.isAdmin = Convert.ToBoolean(xlRange.Cells[i, 5].Value.ToString());
                 userList.Add(ret);
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(MySheet);
+
+            MyBook.Close();
+            Marshal.ReleaseComObject(MyBook);
+
+            MyApp.Quit();
+            Marshal.ReleaseComObject(MyApp);
+        }
+
+        public static void RemovePackage(Package p)
+        {
+
+            Excel.Application MyApp = new Excel.Application();
+            Excel.Workbook MyBook = MyApp.Workbooks.Open(opportunitesDB);
+            Excel.Worksheet MySheet = (Excel.Worksheet)MyBook.Sheets[2];
+            Excel.Range xlRange = MySheet.UsedRange;
+            for (int i = 1; i <= xlRange.Rows.Count; i++)
+            {
+                if (MySheet.Cells[i, 1].Value.ToString() == p.ID && MySheet.Cells[i, 2].Value.ToString() == p.lineNum)
+                {
+                    Excel.Range range = MySheet.get_Range(string.Format("A{0}:A{1}", i, i), Type.Missing).EntireRow;
+                    range.Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
+                    Marshal.ReleaseComObject(range);
+                    MyBook.Save();
+                    break;
+                }
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -568,6 +610,7 @@ namespace project_8
                     MySheet.Cells[i, 8] = d.Date;
                     MySheet.Cells[i, 9] = "don’t know what he wants in his life";
                     GenerateRndPack2(MySheet.Cells[i, 1].Value, rnd.Next(1, 4), d, MyBook);
+                    break;
                 }
                 MyBook.Save();
             }
@@ -662,7 +705,7 @@ namespace project_8
         public static float[] GetStatistics(User u)//0-status
         {
             float[] ret = { 0, 0, 0, 0, 0 };
-
+            float[] overall = GetStatistics();
             foreach (Opp p in opportunites)
             {
                 if (p.treatedBy.ID == u.ID)
@@ -687,8 +730,12 @@ namespace project_8
                             ret[4] += GetPackagePrice(pc.packageType);
                 }
             }
-            ret[0] /= ret[3];
-            ret[4] /= ret[3];
+            ret[1] /= overall[1];
+            ret[1] *= 100;
+            ret[2] /= overall[2];
+            ret[2] *= 100;
+            ret[0] /= ret[3] != 0 ? ret[3] : 1;
+            ret[4] /= ret[3] != 0 ? ret[3] : 1;
             return ret;
         }
 
@@ -724,12 +771,20 @@ namespace project_8
         static void Main()
         {
             init();
+            //GenerateRndOpp(1000);
+            //init();
+            //foreach (Opp o in opportunites)
+            //    if (o.status.ToUpper().Contains("CLOSED"))
+            //        MovetHistory(o.ID);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            new Worker().ShowDialog();
             new LogIn().ShowDialog();
             if (currentUser.ID != null)
+            {
+                if (currentUser.isAdmin)
+                    new workers().Show();
                 Application.Run(new MainWin());
+            }
         }
     }
 }

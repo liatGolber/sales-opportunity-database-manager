@@ -16,7 +16,6 @@ namespace project_8
         {
             InitializeComponent();
             helloL.Text = "Hello " + Program.currentUser.name;
-            regB.Visible = Program.currentUser.isAdmin;
             FillData();
             FillReminders();
         }

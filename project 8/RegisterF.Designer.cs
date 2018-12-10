@@ -108,6 +108,7 @@
             this.textBox5.Location = new System.Drawing.Point(95, 118);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
+            this.textBox5.PasswordChar = '•';
             this.textBox5.Size = new System.Drawing.Size(157, 28);
             this.textBox5.TabIndex = 12;
             this.textBox5.WordWrap = false;
