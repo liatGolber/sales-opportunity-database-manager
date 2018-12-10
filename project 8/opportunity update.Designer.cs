@@ -219,19 +219,27 @@
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(646, 348);
+            this.richTextBox2.Font = new System.Drawing.Font("SpaceClaim ASME CB", 9.7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox2.Location = new System.Drawing.Point(638, 367);
+            this.richTextBox2.Multiline = false;
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(134, 27);
+            this.richTextBox2.ReadOnly = true;
+            this.richTextBox2.Size = new System.Drawing.Size(142, 26);
             this.richTextBox2.TabIndex = 8;
-            this.richTextBox2.Text = "\"price\"";
+            this.richTextBox2.Text = "Total price:  X₪";
+            this.richTextBox2.WordWrap = false;
             // 
             // richTextBox3
             // 
-            this.richTextBox3.Location = new System.Drawing.Point(646, 399);
+            this.richTextBox3.Font = new System.Drawing.Font("SpaceClaim ASME CB", 9.7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox3.Location = new System.Drawing.Point(638, 397);
+            this.richTextBox3.Multiline = false;
             this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(134, 27);
+            this.richTextBox3.ReadOnly = true;
+            this.richTextBox3.Size = new System.Drawing.Size(142, 25);
             this.richTextBox3.TabIndex = 8;
-            this.richTextBox3.Text = "\"Num of items\"";
+            this.richTextBox3.Text = "Total Items: X";
+            this.richTextBox3.WordWrap = false;
             // 
             // opportunity_update
             // 

@@ -15,7 +15,7 @@ namespace project_8
         public MainWin()
         {
             InitializeComponent();
-            helloL.Text = "Hello " + Program.currentUser.name;
+            label1.Text = "Hello " + Program.currentUser.name;
             FillData();
             FillReminders();
         }

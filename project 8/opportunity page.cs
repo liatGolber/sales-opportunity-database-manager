@@ -29,6 +29,7 @@ namespace project_8
             textBox8.Text = "10%";
             textBox9.Text = DateTime.Now.Date.ToShortDateString();
             button1.Text = "Add";
+            button4.Visible = false;
         }
 
         private void updatedTextBoxes()
@@ -92,6 +93,7 @@ namespace project_8
                 {
                     Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
                     button1.Text = "Update";
+                    button4.Visible = true;
                 }
                 else if (opp.ID != null)
                     Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);

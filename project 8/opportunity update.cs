@@ -26,6 +26,7 @@ namespace project_8
         private void FillData()
         {
             dataGridView1.Rows.Clear();
+            int sum = 0;
             foreach (Package p in Program.packages)
             {
                 if (p.ID == op.ID)
@@ -34,8 +35,11 @@ namespace project_8
                     add.Cells[0].Value = p.lineNum;
                     add.Cells[1].Value = Program.GetPackagePrice(p.packageType).ToString() + "₪";
                     dataGridView1.Rows.Add(add);
+                    sum += (int)Program.GetPackagePrice(p.packageType);
                 }
             }
+            richTextBox2.Text = "Total price: " + sum + "₪";
+            richTextBox3.Text = "Total Items: " + (dataGridView1.Rows.Count - 1);
 
         }
 
@@ -60,7 +64,7 @@ namespace project_8
                     FillData();
                     break;
                 }
-           
+
             this.Enabled = true;
         }
 
