@@ -16,6 +16,7 @@ namespace project_8
         {
             InitializeComponent();
             label1.Text = "Hello " + Program.currentUser.name;
+            button3.Visible = Program.currentUser.isAdmin;
             FillData();
             FillReminders();
         }
@@ -154,6 +155,8 @@ namespace project_8
             if (e.RowIndex < 0)
                 return;
             DataGridViewRow sent = (sender as DataGridView).Rows[e.RowIndex];
+            if (sent.Cells[0].Value == null)
+                return;
             Opp o = Program.GetOpByID(sent.Cells[0].Value.ToString());
             this.Hide();
             new opportunity_page(o).ShowDialog();
@@ -175,6 +178,15 @@ namespace project_8
             FillData();
             FillReminders();
             this.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (Program.currentUser.ID != null)
+            {
+                if (Program.currentUser.isAdmin)
+                    new workers().ShowDialog();
+            }
         }
     }
 }

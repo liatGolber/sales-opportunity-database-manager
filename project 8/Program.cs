@@ -291,7 +291,7 @@ namespace project_8
                 values = (ess["Range"] as Excel.Range).Value2;
                 ////
 
-                 i = values.GetLength(0);
+                i = values.GetLength(0);
                 if (values[i, 1] != null) i++;
                 foreach (Package p in packages)
                 {
@@ -721,11 +721,7 @@ namespace project_8
             Application.SetCompatibleTextRenderingDefault(false);
             new LogIn().ShowDialog();
             if (currentUser.ID != null)
-            {
-                if (currentUser.isAdmin)
-                    new workers().Show();
                 Application.Run(new MainWin());
-            }
         }
     }
 }

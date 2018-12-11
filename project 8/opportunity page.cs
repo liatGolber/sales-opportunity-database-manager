@@ -18,7 +18,6 @@ namespace project_8
             InitializeComponent();
             opp = op;
             updatedTextBoxes();
-
         }
 
         public opportunity_page()
@@ -49,7 +48,7 @@ namespace project_8
         private void button3_Click(object sender, EventArgs e)
         {
             opportunity_update ou = new opportunity_update(opp);
-            DialogResult d = ou.ShowDialog();
+            ou.ShowDialog();
             opp = ou.op; 
             updatedTextBoxes();
         }

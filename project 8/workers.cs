@@ -68,9 +68,5 @@ namespace project_8
             new RegisterF().ShowDialog();
         }
 
-        private void workers_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }
