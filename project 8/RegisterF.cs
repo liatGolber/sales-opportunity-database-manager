@@ -19,6 +19,7 @@ namespace project_8
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             string err = "";
             if (textBox1.Text.Length != 9)
                 err += "ID must be 9 digits long\n";
@@ -42,6 +43,7 @@ namespace project_8
                     MessageBox.Show(textBox1.Text + " is already registered please use a differnt ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
+            this.Enabled = true;
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -50,7 +52,6 @@ namespace project_8
                 e.Handled = true;
         }
 
-
-       
+  
     }
 }
