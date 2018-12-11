@@ -29,6 +29,8 @@ namespace project_8
             textBox9.Text = DateTime.Now.Date.ToShortDateString();
             button1.Text = "Add";
             button4.Visible = false;
+            comboBox3.SelectedIndex = 1;
+            comboBox3.Enabled = false;
         }
 
         private void updatedTextBoxes()
@@ -42,6 +44,7 @@ namespace project_8
             textBox8.Text = Program.GetStatusPrec(opp.status).ToString();
             textBox9.Text = opp.treatedAt.ToShortDateString();
             richTextBox1.Text = opp.comment;
+            comboBox3.SelectedItem = opp.status;
             button2.Visible = button1.Visible = false;
         }
 
@@ -49,7 +52,7 @@ namespace project_8
         {
             opportunity_update ou = new opportunity_update(opp);
             ou.ShowDialog();
-            opp = ou.op; 
+            opp = ou.op;
             updatedTextBoxes();
         }
 
@@ -58,11 +61,8 @@ namespace project_8
             button1.Visible = true;
             if (opp.ID != null)
                 button2.Visible = true;
-            if (opp.ID != null && opp.ID == textBox3.Text && opp.name == textBox1.Text && opp.lastN == textBox2.Text
-                && opp.phone == textBox4.Text && textBox5.Text == opp.email && richTextBox1.Text == opp.comment)
-            {
-                button2.Visible = button1.Visible = false;
-            }
+            button2.Visible = button1.Visible = !(opp.ID != null && opp.ID == textBox3.Text && opp.name == textBox1.Text && opp.lastN == textBox2.Text
+                && opp.phone == textBox4.Text && textBox5.Text == opp.email && richTextBox1.Text == opp.comment && comboBox3.SelectedItem.ToString() == opp.status);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -90,16 +90,36 @@ namespace project_8
             {
                 if (opp.ID == null && Program.GetOpByID(textBox3.Text).ID == null)
                 {
-                    Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
+                    Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, comboBox3.SelectedItem.ToString(), Program.currentUser.ID, richTextBox1.Text);
                     button1.Text = "Update";
                     button4.Visible = true;
+                    comboBox3.Enabled = true;
                 }
                 else if (opp.ID != null)
-                    Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, textBox7.Text + "(" + textBox8.Text + ")", Program.currentUser.ID, richTextBox1.Text);
+                {
+                    Program.InsertUpdateOpp(textBox3.Text, textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text, DateTime.Now, comboBox3.SelectedItem.ToString(), Program.currentUser.ID, richTextBox1.Text);
+                    Program.UpdateOppList();
+                    opp = Program.GetOpByID(opp.ID);
+                    if (Program.GetStatusPrec(opp.status) == 0)
+                    {
+                        foreach (Package p in Program.GetPackagesByID(opp.ID))
+                            Program.RemovePackage(p);
+                        Program.MovetHistory(opp.ID);
+                    }
+                    if (Program.GetStatusPrec(opp.status) == 100)
+                        Program.MovetHistory(opp.ID);
+
+                    Program.UpdatePacList();
+                }
                 else
                     MessageBox.Show("ID already used.");
                 Program.UpdateOppList();
                 opp = Program.GetOpByID(textBox3.Text);
+                if (opp.ID == null)
+                {
+                    this.Close();
+                    return; 
+                }
                 updatedTextBoxes();
                 textBox3.ReadOnly = true;
             }
@@ -112,7 +132,55 @@ namespace project_8
                 e.Handled = true;
         }
 
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+
+            button2.Visible = button1.Visible = !(opp.ID != null && opp.ID == textBox3.Text && opp.name == textBox1.Text && opp.lastN == textBox2.Text
+            && opp.phone == textBox4.Text && textBox5.Text == opp.email && richTextBox1.Text == opp.comment && comboBox3.SelectedItem.ToString() == opp.status);
+            switch (comboBox3.SelectedIndex)
+            {
+                case 0:
+                    {
+                        textBox8.Text = "0%";
+                        break;
+                    }
+                case 1:
+                    {
+                        textBox8.Text = "10%";
+                        break;
+                    }
+                case 2:
+                    {
+                        textBox8.Text = "20%";
+                        break;
+                    }
+                case 3:
+                    {
+                        textBox8.Text = "30%";
+                        break;
+                    }
+                case 4:
+                    {
+                        textBox8.Text = "50%";
+                        break;
+                    }
+                case 5:
+                    {
+                        textBox8.Text = "90%";
+                        break;
+                    }
+                case 6:
+                    {
+                        textBox8.Text = "100%";
+                        break;
+                    }
+            }
+
+
+
+
+        }
     }
 }
 
