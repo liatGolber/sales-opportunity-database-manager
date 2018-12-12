@@ -45,7 +45,8 @@ namespace project_8
 
         private void button4_Click(object sender, EventArgs e)
         {
-            new addNewPackage().ShowDialog();
+            new addNewPackage(op).ShowDialog();
+            FillData();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -56,11 +57,6 @@ namespace project_8
                 if (p.lineNum == select.Cells[0].Value.ToString())
                 {
                     Program.RemovePackage(p);
-                    Program.InsertUpdateOpp(op.ID, op.name, op.lastN, op.phone, op.email, DateTime.Now, op.status, op.treatedBy.ID, op.comment);
-                    Program.opportunites.Remove(op);
-                    op.treatedAt = DateTime.Now;
-                    Program.opportunites.Add(op);
-                    Program.packages.Remove(p);
                     FillData();
                     break;
                 }
