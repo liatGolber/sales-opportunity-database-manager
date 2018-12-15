@@ -12,7 +12,7 @@ namespace project_8
 {
     public partial class opportunity_update : Form
     {
-        private Opp op;
+        public Opp op;
         public opportunity_update(Opp o)
         {
             op = o;
@@ -26,6 +26,7 @@ namespace project_8
         private void FillData()
         {
             dataGridView1.Rows.Clear();
+            int sum = 0;
             foreach (Package p in Program.packages)
             {
                 if (p.ID == op.ID)
@@ -34,14 +35,18 @@ namespace project_8
                     add.Cells[0].Value = p.lineNum;
                     add.Cells[1].Value = Program.GetPackagePrice(p.packageType).ToString() + "₪";
                     dataGridView1.Rows.Add(add);
+                    sum += (int)Program.GetPackagePrice(p.packageType);
                 }
             }
+            richTextBox2.Text = "Total price: " + sum + "₪";
+            richTextBox3.Text = "Total Items: " + (dataGridView1.Rows.Count - 1);
 
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            new addNewPackage().ShowDialog();
+            new addNewPackage(op).ShowDialog();
+            FillData();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -52,10 +57,10 @@ namespace project_8
                 if (p.lineNum == select.Cells[0].Value.ToString())
                 {
                     Program.RemovePackage(p);
-                    Program.UpdatePacList();
                     FillData();
                     break;
                 }
+
             this.Enabled = true;
         }
 
@@ -64,7 +69,7 @@ namespace project_8
             DataGridViewRow sent = dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
             int n = 0;
             foreach (Package p in Program.GetPackagesByID(op.ID))
-                if (p.lineNum == sent.Cells[0].Value.ToString())
+                if (sent.Cells[0].Value != null && p.lineNum == sent.Cells[0].Value.ToString())
                 {
                     n = p.packageType;
                     break;

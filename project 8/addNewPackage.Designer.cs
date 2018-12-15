@@ -55,7 +55,6 @@
             this.label5.Size = new System.Drawing.Size(165, 29);
             this.label5.TabIndex = 1;
             this.label5.Text = "add package:";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // comboBox3
             // 
@@ -94,12 +93,13 @@
             // 
             // textBox4
             // 
+            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.textBox4.Location = new System.Drawing.Point(238, 46);
-            this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(187, 32);
+            this.textBox4.Size = new System.Drawing.Size(187, 31);
             this.textBox4.TabIndex = 7;
             this.textBox4.WordWrap = false;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox4_KeyPress);
             // 
             // addNewPackage
             // 

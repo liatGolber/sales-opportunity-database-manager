@@ -15,7 +15,8 @@ namespace project_8
         public MainWin()
         {
             InitializeComponent();
-            helloL.Text = "Hello " + Program.currentUser.name;
+            label1.Text = "Hello " + Program.currentUser.name;
+            button3.Visible = Program.currentUser.isAdmin;
             FillData();
             FillReminders();
         }
@@ -142,7 +143,7 @@ namespace project_8
 
                 if (DateTime.Now.Date >= o.treatedAt.Date.AddDays(7).Date || p >= 80)
                 {
-                    add.DefaultCellStyle.BackColor = p >= 80 ? Color.FromArgb(68, 140, 255) : Color.FromArgb(255, 50, 72);
+                    add.DefaultCellStyle.BackColor = p >= 80 ? Color.FromArgb(255, 144, 25) : Color.FromArgb(255, 50, 72);
                     dataGridView2.Rows.Add(add);
                 }
 
@@ -154,6 +155,8 @@ namespace project_8
             if (e.RowIndex < 0)
                 return;
             DataGridViewRow sent = (sender as DataGridView).Rows[e.RowIndex];
+            if (sent.Cells[0].Value == null)
+                return;
             Opp o = Program.GetOpByID(sent.Cells[0].Value.ToString());
             this.Hide();
             new opportunity_page(o).ShowDialog();
@@ -176,5 +179,16 @@ namespace project_8
             FillReminders();
             this.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (Program.currentUser.ID != null)
+            {
+                if (Program.currentUser.isAdmin)
+                    new workers().ShowDialog();
+            }
+        }
+
+      
     }
 }
