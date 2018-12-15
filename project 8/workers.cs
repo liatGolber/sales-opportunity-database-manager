@@ -66,6 +66,7 @@ namespace project_8
         private void regB_Click(object sender, EventArgs e)
         {
             new RegisterF().ShowDialog();
+            FillData();
         }
 
     }

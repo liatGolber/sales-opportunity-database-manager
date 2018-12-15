@@ -143,7 +143,7 @@ namespace project_8
 
                 if (DateTime.Now.Date >= o.treatedAt.Date.AddDays(7).Date || p >= 80)
                 {
-                    add.DefaultCellStyle.BackColor = p >= 80 ? Color.FromArgb(68, 140, 255) : Color.FromArgb(255, 50, 72);
+                    add.DefaultCellStyle.BackColor = p >= 80 ? Color.FromArgb(255, 144, 25) : Color.FromArgb(255, 50, 72);
                     dataGridView2.Rows.Add(add);
                 }
 
@@ -188,5 +188,7 @@ namespace project_8
                     new workers().ShowDialog();
             }
         }
+
+      
     }
 }
