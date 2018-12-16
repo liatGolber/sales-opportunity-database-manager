@@ -56,7 +56,9 @@ namespace project_8
                 err += "Please enter a phone number\n";
             else if (Program.PhoneUsed(textBox4.Text))
                 err += "Phone already taken\n";
-            if (err != "")
+            if (textBox4.Text.Length != 10)
+                err += "Phone Num Must Heve 10 Digits\n";
+                if (err != "")
                 MessageBox.Show(err, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {

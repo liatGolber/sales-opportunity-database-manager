@@ -197,3 +197,20 @@ C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-l
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-liatGolber-patch-1\project 8\obj\Debug\project_8.SearchPopUp.resources
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-liatGolber-patch-1\project 8\obj\Debug\project_8.workers.resources
 C:\Users\Omer Avisror\Desktop\verision\liat\sales-opportunity-database-manager-liatGolber-patch-1\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe.config
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.exe
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\bin\Debug\project 8.pdb
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csprojResolveAssemblyReference.cache
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.ResolveComReference.cache
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.addNewPackage.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.LogIn.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.MainWin.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.opportunity_page.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.opportunity_update.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.Properties.Resources.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.RegisterF.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.SearchPopUp.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.workers.resources
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.exe
+C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.pdb
