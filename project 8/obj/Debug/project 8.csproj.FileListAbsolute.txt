@@ -214,3 +214,7 @@ C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-
 C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
 C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.exe
 C:\Users\misha\OneDrive\Desktop\sales-opportunity-database-manager-master\sales-opportunity-database-manager-master\project 8\obj\Debug\project 8.pdb
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.opportunity_page.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.opportunity_update.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.SearchPopUp.resources
+C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.workers.resources

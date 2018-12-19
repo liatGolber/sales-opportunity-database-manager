@@ -50,8 +50,12 @@ namespace project_8
             dataGridView1.Rows.Clear();
             foreach (Opp o in Program.opportunites)
             {
-                if (o.hID != null)
-                    continue;
+                if (!checkBox1.Checked)
+                    if (o.hID != null)
+                        continue;
+                if (checkBox1.Checked)
+                    if (o.hID == null)
+                        continue;
                 DataGridViewRow add = dataGridView1.Rows[0].Clone() as DataGridViewRow;
                 add.Cells[0].Value = o.ID;
                 add.Cells[1].Value = o.name;
@@ -62,7 +66,8 @@ namespace project_8
                 add.Cells[6].Value = o.treatedBy.ID;
                 add.Cells[7].Value = o.treatedAt.ToShortDateString();
                 add.Cells[8].Value = o.comment;
-
+                if (checkBox1.Checked)
+                    add.Cells[9].Value = o.hID;
                 switch (colI)
                 {
                     case -1:
@@ -189,6 +194,10 @@ namespace project_8
             }
         }
 
-      
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Columns[9].Visible = checkBox1.Checked;
+            FillData();
+        }
     }
 }
