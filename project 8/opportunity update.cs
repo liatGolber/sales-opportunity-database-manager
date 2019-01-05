@@ -22,6 +22,7 @@ namespace project_8
             textBox2.Text = op.name;
             textBox3.Text = op.lastN;
             textBox4.Text = op.phone;
+            
             if (op.hID != null)
             {
                 dataGridView1.Columns[1].Visible = dataGridView1.Columns[2].Visible = true;
@@ -29,6 +30,8 @@ namespace project_8
                     if (!(c is DataGridView))
                         c.Enabled = false;
             }
+            else
+                button3.Enabled = dataGridView1.Rows.Count > 1;
 
         }
         private void FillData()
@@ -60,6 +63,7 @@ namespace project_8
         {
             new addNewPackage(op).ShowDialog();
             FillData();
+            button3.Enabled = dataGridView1.Rows.Count > 1;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -73,8 +77,8 @@ namespace project_8
                     FillData();
                     break;
                 }
-
             this.Enabled = true;
+            button3.Enabled = dataGridView1.Rows.Count > 1;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)

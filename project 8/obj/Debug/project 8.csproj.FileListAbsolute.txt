@@ -218,3 +218,20 @@ C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.opportunity_update.resources
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.SearchPopUp.resources
 C:\Users\omerav1\Desktop\sales-opportunity-database-manager-master\project 8\obj\Debug\project_8.workers.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\bin\Debug\project 8.exe.config
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\bin\Debug\project 8.exe
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\bin\Debug\project 8.pdb
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project 8.csprojResolveAssemblyReference.cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project 8.csproj.ResolveComReference.cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.addNewPackage.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.LogIn.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.MainWin.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.opportunity_page.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.opportunity_update.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.Properties.Resources.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.RegisterF.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.SearchPopUp.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project_8.workers.resources
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project 8.csproj.GenerateResource.Cache
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project 8.exe
+C:\Users\Omer Avisror\Desktop\sales-opportunity-database-manager-HistoryUpdate\project 8\obj\Debug\project 8.pdb
