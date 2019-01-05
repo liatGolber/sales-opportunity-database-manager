@@ -18,6 +18,12 @@ namespace project_8
             InitializeComponent();
             opp = op;
             updatedTextBoxes();
+            if (opp.hID != null)
+                foreach (Control c in this.Controls)
+                    if (c.Name != "button4")
+                        c.Enabled = false;
+                    else
+                        (c as Button).Text = "Package details";
         }
 
         public opportunity_page()
@@ -44,7 +50,7 @@ namespace project_8
             textBox7.Text = opp.status.Substring(0, opp.status.IndexOf('('));
             textBox8.Text = Program.GetStatusPrec(opp.status).ToString();
             textBox9.Text = opp.treatedAt.ToShortDateString();
-            richTextBox1.Text = opp.comment;     
+            richTextBox1.Text = opp.comment;
             button2.Visible = button1.Visible = false;
         }
 

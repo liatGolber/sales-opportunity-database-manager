@@ -22,6 +22,17 @@ namespace project_8
             textBox2.Text = op.name;
             textBox3.Text = op.lastN;
             textBox4.Text = op.phone;
+            
+            if (op.hID != null)
+            {
+                dataGridView1.Columns[1].Visible = dataGridView1.Columns[2].Visible = true;
+                foreach (Control c in this.Controls)
+                    if (!(c is DataGridView))
+                        c.Enabled = false;
+            }
+            else
+                button3.Enabled = dataGridView1.Rows.Count > 1;
+
         }
         private void FillData()
         {
@@ -33,7 +44,12 @@ namespace project_8
                 {
                     DataGridViewRow add = dataGridView1.Rows[0].Clone() as DataGridViewRow;
                     add.Cells[0].Value = p.lineNum;
-                    add.Cells[1].Value = Program.GetPackagePrice(p.packageType).ToString() + "₪";
+                    if(op.hID != null)
+                    {
+                        add.Cells[1].Value = p.startD.ToShortDateString();
+                        add.Cells[2].Value = p.endD.ToShortDateString();
+                    }
+                    add.Cells[3].Value = Program.GetPackagePrice(p.packageType).ToString() + "₪";
                     dataGridView1.Rows.Add(add);
                     sum += (int)Program.GetPackagePrice(p.packageType);
                 }
@@ -47,6 +63,7 @@ namespace project_8
         {
             new addNewPackage(op).ShowDialog();
             FillData();
+            button3.Enabled = dataGridView1.Rows.Count > 1;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -60,8 +77,8 @@ namespace project_8
                     FillData();
                     break;
                 }
-
             this.Enabled = true;
+            button3.Enabled = dataGridView1.Rows.Count > 1;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
